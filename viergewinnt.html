@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vier Gewinnt</title>
+    <script language="javascript" type="text/javascript" src="vg.js"></script>
+
+    <style>
+.vier-gewinnt [aria-label="rot"] {
+    background-image: url('rot.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.vier-gewinnt [aria-label="gelb"] {
+    background-image: url('gelb.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.chip {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    position: absolute;
+    transition: top 0.5s ease-in-out;
+}
+.cell {
+    width: 60px; /* Ändern Sie die Breite nach Bedarf */
+    height: 60px; /* Ändern Sie die Höhe nach Bedarf */
+    margin: 5px; /* Hinzufügen von Abstand zwischen den Zellen */
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="vier-gewinnt" aria-describedby="hint">
+            <p id="hint">Zum spielen abwechselnd in die Felder klicken!</p>
+            <div id="gameboard" style="position: relative;">
+                <div class="column">
+                    <button class="cell" data-col="A"></button>
+                    <button class="cell" data-col="B"></button>
+                    <button class="cell" data-col="C"></button>
+                    <button class="cell" data-col="D"></button>
+                    <button class="cell" data-col="E"></button>
+                    <button class="cell" data-col="F"></button>
+                    <button class="cell" data-col="G"></button>
+                </div>
+                <div class="column">
+                    <button class="cell" data-col="A"></button>
+                    <button class="cell" data-col="B"></button>
+                    <button class="cell" data-col="C"></button>
+                    <button class="cell" data-col="D"></button>
+                    <button class="cell" data-col="E"></button>
+                    <button class="cell" data-col="F"></button>
+                    <button class="cell" data-col="G"></button>
+                </div>
+                <div class="column">
+                    <button class="cell" data-col="A"></button>
+                    <button class="cell" data-col="B"></button>
+                    <button class="cell" data-col="C"></button>
+                    <button class="cell" data-col="D"></button>
+                    <button class="cell" data-col="E"></button>
+                    <button class="cell" data-col="F"></button>
+                    <button class="cell" data-col="G"></button>
+                </div>
+                <div class="column">
+                    <button class="cell" data-col="A"></button>
+                    <button class="cell" data-col="B"></button>
+                    <button class="cell" data-col="C"></button>
+                    <button class="cell" data-col="D"></button>
+                    <button class="cell" data-col="E"></button>
+                    <button class="cell" data-col="F"></button>
+                    <button class="cell" data-col="G"></button>
+                </div>
+                <div class="column">
+                    <button class="cell" data-col="A"></button>
+                    <button class="cell" data-col="B"></button>
+                    <button class="cell" data-col="C"></button>
+                    <button class="cell" data-col="D"></button>
+                    <button class="cell" data-col="E"></button>
+                    <button class="cell" data-col="F"></button>
+                    <button class="cell" data-col="G"></button>
+                </div>
+                <div class="column">
+                    <button class="cell" data-col="A"></button>
+                    <button class="cell" data-col="B"></button>
+                    <button class="cell" data-col="C"></button>
+                    <button class="cell" data-col="D"></button>
+                    <button class="cell" data-col="E"></button>
+                    <button class="cell" data-col="F"></button>
+                    <button class="cell" data-col="G"></button>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let current = 0;
+            const players = ["rot", "gelb"];
+            const hint = document.getElementById("hint");
+            const gameboard = document.getElementById("gameboard");
+
+            gameboard.addEventListener("click", function (e) {
+                const columnButton = e.target;
+                const column = columnButton.dataset.col;
+                const cells = document.querySelectorAll(`.cell[data-col="${column}"]`);
+                let emptyCell = null;
+
+                for (let i = cells.length - 1; i >= 0; i--) {
+                    if (!cells[i].classList.contains("rot") && !cells[i].classList.contains("gelb")) {
+                        emptyCell = cells[i];
+                        break;
+                    }
+                }
+
+                if (emptyCell) {
+                    const chip = document.createElement("div");
+                    chip.className = `chip ${players[current]}`;
+                    chip.style.backgroundColor = players[current];
+                    emptyCell.appendChild(chip);
+                    const cellRect = emptyCell.getBoundingClientRect();
+                    const chipRect = chip.getBoundingClientRect();
+                    chip.style.top = `${cellRect.top - chipRect.height}px`;
+                    chip.style.left = `${cellRect.left}px`;
+                    setTimeout(() => {
+                        chip.style.top = `${cellRect.top}px`;
+                    }, 10);
+
+                    emptyCell.classList.add(players[current]);
+                    current = 1 - current;
+                    hint.innerText = "Spieler " + players[current] + " ist am Zug";
+                }
+            });
+        });
+    </script>
+</body>
+</html>

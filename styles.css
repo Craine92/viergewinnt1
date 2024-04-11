@@ -1,0 +1,39 @@
+
+
+
+
+.vier-gewinnt #gameboard {
+    width: 30vmin;
+    height: 30vmin;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0;
+    
+    /*vmin = kleinerer wert von vw/vh 60% vom Bildschirm wird eingenommen
+    display grid = layout was ermöglicht Elemente in Zeilen & Spalten anzuordnen (TicTacToe Gitter)
+    grid-template-columns: breite der Spalten, repeat(3, 1fr) repeat funktion wiederholt anzahl von Spalten (3), 
+    1fr (Fractional Unit) teilt den verfügbarenplatz in dem Container in geil große Teile auf. (300px Container mit 3 Spalten, mit 1fr wird jede Spalte 100px groß)  
+    gap = abstand zwischen Zellen des Gitters auf 0 (Direkt angrenzend)*/
+}
+
+.vier-gewinnt button {
+    width: 10vmin;
+    height: 10vmin;
+    background: white;
+    border: 1px solid black;
+    margin: 0;
+    font: 0/0 transparent;
+    /* 0/0 setzt die schriftgröße und zeilenhöhe auf 0, transparent verbirgt den Schriftzug der Buttons*/
+}
+
+.vier-gewinnt [aria-label="rot"] {
+    background-image: url('rot.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.vier-gewinnt [aria-label="gelb"]{
+	background-image: url('gelb.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
